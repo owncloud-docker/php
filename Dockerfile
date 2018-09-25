@@ -1,4 +1,4 @@
-FROM owncloud/ubuntu:latest
+FROM owncloud/ubuntu:bionic
 
 LABEL maintainer="ownCloud DevOps <devops@owncloud.com>" \
   org.label-schema.name="ownCloud PHP" \
