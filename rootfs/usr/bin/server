@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ "${DEBUG}" == "true" ]] && set -x
+
+exec apachectl -f /etc/apache2/apache2.conf -DFOREGROUND
