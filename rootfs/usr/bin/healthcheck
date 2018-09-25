@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -eo pipefail
+[[ "${DEBUG}" == "true" ]] && set -x
+
+CHECK="$(curl -sL -w %{http_code} -o /dev/null http://localhost:${APACHE_LISTEN:-8080}/)"
+
+if [[ "${CHECK}" == "200" ]]
+then
+  exit 0
+fi
+
+exit 1

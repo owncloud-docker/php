@@ -1,0 +1,91 @@
+workspace:
+  base: /var/www
+  path: base
+
+branches:
+  - 16.04
+
+clone:
+  git:
+    image: plugins/git:1
+    pull: true
+
+pipeline:
+  wait:
+    image: owncloud/ubuntu:latest
+    pull: true
+    commands:
+      - wait-for-it -t 600 docker:2375
+
+  build:
+    image: toolhippie/docker:latest
+    pull: true
+    environment:
+      - DOCKER_HOST=tcp://docker:2375
+    commands:
+      - docker build -t owncloud/php:16.04 -t owncloud/php:xenial .
+
+  server:
+    image: toolhippie/docker:latest
+    pull: true
+    detach: true
+    environment:
+      - DOCKER_HOST=tcp://docker:2375
+    commands:
+      - docker run -p 8000:8080 owncloud/php:16.04
+
+  test:
+    image: owncloud/ubuntu:latest
+    pull: true
+    commands:
+      - wait-for-it -t 600 docker:8000
+      - curl -sSf http://docker:8000/
+
+  publish:
+    image: toolhippie/docker:latest
+    pull: true
+    secrets: [ docker_username, docker_password ]
+    environment:
+      - DOCKER_HOST=tcp://docker:2375
+    commands:
+      - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - docker push owncloud/php:16.04
+      - docker push owncloud/php:xenial
+    when:
+      event: [ push ]
+
+  microbadger:
+    image: plugins/webhook:1
+    pull: true
+    secrets: [ webhook_urls ]
+    when:
+      local: false
+      event: [ push ]
+
+  downstream:
+    image: plugins/downstream:1
+    pull: true
+    secrets: [ drone_token ]
+    server: https://drone.owncloud.com
+    last_successful: true
+    repositories:
+      - owncloud-docker/base@16.04
+    when:
+      local: false
+      event: [ push ]
+      status: [ success ]
+      branch: [ 16.04 ]
+
+  slack:
+    image: plugins/slack:1
+    pull: true
+    secrets: [ slack_webhook ]
+    channel: docker
+    when:
+      local: false
+      event: [ push ]
+      status: [ changed, failure ]
+
+services:
+  docker:
+    image: docker:16.04-dind
