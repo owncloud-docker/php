@@ -72,9 +72,9 @@ pipeline:
       - DOCKER_HOST=tcp://docker:2375
     commands:
       - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      - docker tag owncloud/php:${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER} owncloud/php:16.04
+      - docker tag owncloud/php:${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER} owncloud/php:18.04
       - docker push owncloud/php:18.04
-      - docker tag owncloud/php:${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER} owncloud/php:xenial
+      - docker tag owncloud/php:${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER} owncloud/php:bionic
       - docker push owncloud/php:bionic
     when:
       event: [ push ]
