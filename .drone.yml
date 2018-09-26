@@ -23,7 +23,7 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://docker:2375
     commands:
-      - docker build -t owncloud/php:latest .
+      - docker build -t owncloud/php:${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER} .
 
   server:
     image: toolhippie/docker:latest
@@ -32,7 +32,7 @@ pipeline:
     environment:
       - DOCKER_HOST=tcp://docker:2375
     commands:
-      - docker run -p 8000:8080 owncloud/php:latest
+      - docker run -p 8000:8080 owncloud/php:${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER}
 
   test:
     image: owncloud/ubuntu:latest
@@ -40,6 +40,29 @@ pipeline:
     commands:
       - wait-for-it -t 600 docker:8000
       - curl -sSf http://docker:8000/
+
+  prepublish:
+    image: toolhippie/docker:latest
+    pull: true
+    secrets: [ docker_username, docker_password ]
+    environment:
+      - DOCKER_HOST=tcp://docker:2375
+    commands:
+      - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - docker push owncloud/php:${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER}
+    when:
+      event: [ push ]
+
+  clair:
+    image: toolhippie/klar:latest
+    pull: true
+    environment:
+      - CLAIR_ADDR=clair.owncloud.com
+      - CLAIR_OUTPUT=High
+    commands:
+      - klar owncloud/php:${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER}
+    when:
+      event: [ push ]
 
   publish:
     image: toolhippie/docker:latest
@@ -49,9 +72,22 @@ pipeline:
       - DOCKER_HOST=tcp://docker:2375
     commands:
       - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - docker tag owncloud/php:${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER} owncloud/php:latest
       - docker push owncloud/php:latest
     when:
       event: [ push ]
+
+  cleanup:
+    image: toolhippie/jq:latest
+    pull: true
+    secrets: [ docker_username, docker_password ]
+    commands:
+      - |
+        TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'$DOCKER_USERNAME'", "password": "'$DOCKER_PASSWORD'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
+        curl --fail -o /dev/null -H "Authorization: JWT ${TOKEN}" -H "Content-Type: application/json" -X DELETE https://hub.docker.com/v2/repositories/owncloud/php/tags/${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER}/
+    when:
+      event: [ push ]
+      status: [ success, failure ]
 
   microbadger:
     image: plugins/webhook:1
