@@ -88,4 +88,4 @@ pipeline:
 
 services:
   docker:
-    image: docker:16.04-dind
+    image: docker:18.04-dind
