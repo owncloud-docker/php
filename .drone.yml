@@ -83,8 +83,8 @@ pipeline:
     secrets: [ docker_username, docker_password ]
     commands:
       - |
-        TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'$DOCKER_USERNAME'", "password": "'$DOCKER_PASSWORD'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
-        curl --fail -o /dev/null -H "Authorization: JWT ${TOKEN}" -H "Content-Type: application/json" -X DELETE https://hub.docker.com/v2/repositories/owncloud/php/tags/${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER}/
+        TOKEN=$(curl -s -H "Content-Type: application/json" -X POST -d '{"username": "'"$DOCKER_USERNAME"'", "password": "'"$DOCKER_PASSWORD"'"}' https://hub.docker.com/v2/users/login/ | jq -r .token)
+        curl --fail -o /dev/null -H "Authorization: JWT $TOKEN" -H "Content-Type: application/json" -X DELETE https://hub.docker.com/v2/repositories/owncloud/php/tags/${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER}/
     when:
       event: [ push ]
       status: [ success, failure ]
