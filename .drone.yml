@@ -106,7 +106,7 @@ pipeline:
     server: https://drone.owncloud.com
     last_successful: true
     repositories:
-      - owncloud-docker/base@16.04
+      - owncloud-docker/base@xenial
     when:
       local: false
       event: [ push ]
