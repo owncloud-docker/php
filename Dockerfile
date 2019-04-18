@@ -10,6 +10,9 @@ EXPOSE 8080
 ENTRYPOINT ["/usr/bin/entrypoint"]
 CMD ["/usr/bin/server"]
 
+RUN curl -s https://download.owncloud.com/repositories/sernet/sernet.key | apt-key add - && \
+  echo "deb https://download.owncloud.com/repositories/sernet/samba-4.8/ubuntu bionic main" | tee /etc/apt/sources.list.d/sernet.list
+
 RUN apt-get update -y && \
   apt-get upgrade -y && \
   apt-get install -y \
@@ -31,7 +34,7 @@ RUN apt-get update -y && \
     php-apcu \
     php-redis \
     php-smbclient \
-    smbclient \
+    sernet-samba-client \
     patch \
     mysql-client \
     postgresql-client \
