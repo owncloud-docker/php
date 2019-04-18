@@ -1,5 +1,10 @@
 # Changelog
 
+## 2019-04-17
+
+* Added
+  * Install current samba from Sernet
+
 ## 2018-10-08
 
 * Fixed
