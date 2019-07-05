@@ -10,8 +10,8 @@ EXPOSE 8080
 ENTRYPOINT ["/usr/bin/entrypoint"]
 CMD ["/usr/bin/server"]
 
-RUN curl -s https://download.owncloud.com/repositories/sernet/sernet.key | apt-key add - && \
-  echo "deb https://download.owncloud.com/repositories/sernet/samba-4.8/ubuntu xenial main" | tee /etc/apt/sources.list.d/sernet.list
+RUN curl -sSL https://download.owncloud.com/repositories/sernet/sernet.key | apt-key add - && \
+  curl -sSL -o /etc/apt/sources.list.d/sernet.list http://download.owncloud.com/repositories/sernet/samba-4.8/ubuntu/dists/xenial/sernet-samba-4.8.list
 
 RUN apt-get update -y && \
   apt-get upgrade -y && \
