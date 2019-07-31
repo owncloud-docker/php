@@ -3,7 +3,7 @@ workspace:
   path: base
 
 branches:
-  - 16.04
+  - xenial
 
 clone:
   git:
@@ -72,10 +72,10 @@ pipeline:
       - DOCKER_HOST=tcp://docker:2375
     commands:
       - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      - docker tag owncloud/php:${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER} owncloud/php:16.04
-      - docker push owncloud/php:16.04
       - docker tag owncloud/php:${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER} owncloud/php:xenial
       - docker push owncloud/php:xenial
+      - docker tag owncloud/php:${DRONE_COMMIT_SHA}-${DRONE_BUILD_NUMBER} owncloud/php:xenial-$(date '+%Y%m%d')
+      - docker push owncloud/php:xenial-$(date '+%Y%m%d')
     when:
       event: [ push ]
 
@@ -111,7 +111,7 @@ pipeline:
       local: false
       event: [ push ]
       status: [ success ]
-      branch: [ 16.04 ]
+      branch: [ xenial ]
 
   slack:
     image: plugins/slack:1

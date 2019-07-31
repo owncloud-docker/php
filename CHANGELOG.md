@@ -1,5 +1,10 @@
 # Changelog
 
+## 2019-07-31
+
+* Added
+  * Also tag date-suffixed containers
+
 ## 2019-04-17
 
 * Added
