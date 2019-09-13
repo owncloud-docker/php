@@ -34,6 +34,7 @@ RUN apt-get update -y && \
     php-apcu \
     php-redis \
     php-smbclient \
+    php-gmp \
     sernet-samba-client \
     patch \
     mysql-client \
