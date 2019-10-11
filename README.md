@@ -5,21 +5,22 @@
 
 This is our basic PHP and webserver stack, it is based on our [Ubuntu container](https://registry.hub.docker.com/u/owncloud/ubuntu/).
 
-
 ## Versions
 
-To get an overview about the available versions please take a look at the [GitHub branches](https://github.com/owncloud-docker/php/branches/all) or our [Docker Hub tags](https://hub.docker.com/r/owncloud/php/tags/), these lists are always up to date. Please note that release candidates or alpha/beta versions are only temporary available, they will be removed after the final release of a version.
-
+* [latest](./latest) available as `owncloud/php:latest`
+* [19.10](./v19.10) available as `owncloud/php:19.10`
+* [19.04](./v19.04) available as `owncloud/php:19.04`
+* [18.10](./v18.10) available as `owncloud/php:18.10`
+* [18.04](./v18.04) available as `owncloud/php:18.04`
+* [16.04](./v16.04) available as `owncloud/php:16.04`
 
 ## Volumes
 
 * None
 
-
 ## Ports
 
 * 8080
-
 
 ## Available environment variables
 
@@ -51,32 +52,26 @@ APACHE_ACCESS_FILE_NAME .htaccess
 APACHE_LISTEN 8080
 ```
 
-
 ## Inherited environment variables
 
 * [owncloud/ubuntu](https://github.com/owncloud-docker/ubuntu#available-environment-variables)
-
 
 ## Issues, Feedback and Ideas
 
 Open an [Issue](https://github.com/owncloud-docker/php/issues)
 
-
 ## Contributing
 
 Fork -> Patch -> Push -> Pull Request
-
 
 ## Authors
 
 * [Thomas Boerger](https://github.com/tboerger)
 * [Felix Boehm](https://github.com/felixboehm)
 
-
 ## License
 
 MIT
-
 
 ## Copyright
 

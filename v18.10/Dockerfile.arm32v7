@@ -1,4 +1,4 @@
-FROM owncloud/ubuntu:latest
+FROM owncloud/ubuntu:18.10-arm32v7
 
 LABEL maintainer="ownCloud DevOps <devops@owncloud.com>" \
   org.label-schema.name="ownCloud PHP" \
@@ -9,9 +9,6 @@ EXPOSE 8080
 
 ENTRYPOINT ["/usr/bin/entrypoint"]
 CMD ["/usr/bin/server"]
-
-RUN curl -sSL https://download.owncloud.com/repositories/sernet/sernet.key | apt-key add - && \
-  curl -sSL -o /etc/apt/sources.list.d/sernet.list http://download.owncloud.com/repositories/sernet/samba-4.8/ubuntu/dists/bionic/sernet-samba-4.8.list
 
 RUN apt-get update -y && \
   apt-get upgrade -y && \
@@ -34,7 +31,8 @@ RUN apt-get update -y && \
     php-apcu \
     php-redis \
     php-smbclient \
-    sernet-samba-client \
+    php-gmp \
+    smbclient \
     patch \
     mysql-client \
     postgresql-client \
@@ -46,5 +44,5 @@ RUN apt-get update -y && \
   chown -R www-data:www-data /var/www/html /var/log/apache2 /var/run/apache2 && \
   chsh -s /bin/bash www-data
 
-COPY rootfs /
+COPY ./overlay /
 WORKDIR /var/www/html
