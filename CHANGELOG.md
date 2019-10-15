@@ -1,5 +1,10 @@
 # Changelog
 
+## 2019-10-15
+
+* Added
+  * Properly log proxied remote IPs
+
 ## 2019-07-31
 
 * Added
