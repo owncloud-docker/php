@@ -80,7 +80,14 @@ def docker(ctx, version, arch):
           'repo': 'registry.drone.owncloud.com/build/php',
           'registry': 'registry.drone.owncloud.com',
           'context': prefix,
+          'purge': False,
         },
+        'volumes': [
+          {
+            'name': 'docker',
+            'path': '/var/lib/docker'
+          },
+        ],
       },
       {
         'name': 'clair',
@@ -125,21 +132,34 @@ def docker(ctx, version, arch):
           'curl -sSf http://server:8080/',
         ],
       },
-
-
-
-
-
-      # TODO: push to final destination!
-
-
-
-
-
+      {
+        'name': 'publish',
+        'image': 'plugins/docker',
+        'pull': 'always',
+        'settings': {
+          'username': {
+            'from_secret': 'public_username',
+          },
+          'password': {
+            'from_secret': 'public_password',
+          },
+          'tags': tag,
+          'dockerfile': '%s/Dockerfile.%s' % (prefix, arch),
+          'repo': 'owncloud/php',
+          'context': prefix,
+        },
+        'volumes': [
+          {
+            'name': 'docker',
+            'path': '/var/lib/docker'
+          },
+        ],
+      },
       {
         'name': 'cleanup',
         'image': 'toolhippie/reg:latest',
         'pull': 'always',
+        'failure': 'ignore',
         'environment': {
           'DOCKER_USER': {
             'from_secret': 'internal_username',
@@ -150,7 +170,19 @@ def docker(ctx, version, arch):
         },
         'commands': [
           'reg rm --username $DOCKER_USER --password $DOCKER_PASSWORD registry.drone.owncloud.com/build/php:%s' % prepublish,
-        ]
+        ],
+        'when': {
+          'status': [
+            'success',
+            'failure'
+          ]
+        }
+      },
+    ],
+    'volumes': [
+      {
+        'name': 'docker',
+        'temp': {},
       },
     ],
     'image_pull_secrets': [
