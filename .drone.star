@@ -96,6 +96,7 @@ def docker(ctx, version, arch):
         'environment': {
           'CLAIR_ADDR': 'clair.owncloud.com',
           'CLAIR_OUTPUT': 'High',
+          'CLAIR_TIMEOUT': '5',
           'DOCKER_USER': {
             'from_secret': 'internal_username',
           },
