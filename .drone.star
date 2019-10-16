@@ -154,6 +154,11 @@ def docker(ctx, version, arch):
             'path': '/var/lib/docker'
           },
         ],
+        'when': {
+          'ref': [
+            'refs/heads/master',
+          ],
+        },
       },
       {
         'name': 'cleanup',
