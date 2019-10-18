@@ -45,7 +45,8 @@ RUN apt-get update -y && \
   a2enmod rewrite headers env dir mime expires remoteip && \
   mkdir -p /var/www/html && \
   chown -R www-data:www-data /var/www/html /var/log/apache2 /var/run/apache2 && \
-  chsh -s /bin/bash www-data
+  chsh -s /bin/bash www-data && \
+  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
 
 COPY ./overlay /
 WORKDIR /var/www/html

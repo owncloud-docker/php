@@ -1,5 +1,10 @@
 # Changelog
 
+## 2019-10-18
+
+* Added
+  * Install composer for dep management
+
 ## 2019-10-16
 
 * Changed
