@@ -1,4 +1,4 @@
-FROM owncloud/ubuntu:19.04-amd64@sha256:918db4efc794ceec7a153c266cb24aa1ac17c9aeafbb7b6b735b347f480126db
+FROM owncloud/ubuntu:19.04-amd64
 
 LABEL maintainer="ownCloud DevOps <devops@owncloud.com>" \
   org.label-schema.name="ownCloud PHP" \
