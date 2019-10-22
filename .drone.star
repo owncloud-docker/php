@@ -60,8 +60,8 @@ def main(ctx):
     stages.extend(inner)
 
   after = [
-    microbadger(ctx),
-    rocketchat(ctx),
+    microbadger(config),
+    rocketchat(config),
   ]
 
   for s in stages:
@@ -296,7 +296,7 @@ def server(config):
     'pull': 'always',
     'detach': True,
     'commands': [
-      '/usr/bin/server',
+      'server',
     ],
   }]
 
