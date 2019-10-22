@@ -247,6 +247,9 @@ def sleep(config):
   }]
 
 def trivy(config):
+  if config['arch'] != 'amd64':
+    return []
+
   return [
     {
       'name': 'database',
@@ -284,7 +287,7 @@ def trivy(config):
         'TRIVY_CACHE_DIR': '/drone/src/trivy'
       },
       'commands': [
-        'trivy registry.drone.owncloud.com/owncloud/php:%s' % config['internal'],
+        'retry -- trivy registry.drone.owncloud.com/owncloud/php:%s' % config['internal'],
       ],
     },
   ]
