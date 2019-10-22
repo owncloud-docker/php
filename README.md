@@ -1,6 +1,6 @@
 # ownCloud: PHP
 
-[![Build Status](https://drone.owncloud.com/api/badges/owncloud-docker/php/status.svg)](https://drone.owncloud.com/owncloud-docker/php)
+[![Build Status](https://cloud.drone.io/api/badges/owncloud-docker/php/status.svg)](https://cloud.drone.io/owncloud-docker/php)
 [![](https://images.microbadger.com/badges/image/owncloud/php.svg)](https://microbadger.com/images/owncloud/php "Get your own image badge on microbadger.com")
 
 This is our basic PHP and webserver stack, it is based on our [Ubuntu container](https://registry.hub.docker.com/u/owncloud/ubuntu/).
