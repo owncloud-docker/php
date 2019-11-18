@@ -18,7 +18,7 @@ def main(ctx):
     'version': None,
     'arch': None,
     'downstream': [
-      'owncloud-docker/base',
+      'owncloud-docker/base@master',
     ],
   }
 
