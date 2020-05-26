@@ -1,5 +1,10 @@
 # Changelog
 
+## 2020-05-25
+
+* Added
+  * Add Ubuntu 20.04 with php 7.4
+
 ## 2019-10-18
 
 * Added
