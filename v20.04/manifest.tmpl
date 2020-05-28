@@ -1,10 +1,12 @@
-image: owncloud/php:latest
+image: owncloud/php:20.04
+tags:
+  - focal
 manifests:
-  - image: owncloud/php:amd64
+  - image: owncloud/php:20.04-amd64
     platform:
       architecture: amd64
       os: linux
-  - image: owncloud/php:arm64v8
+  - image: owncloud/php:20.04-arm64v8
     platform:
       architecture: arm64
       variant: v8

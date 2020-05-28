@@ -1,4 +1,4 @@
-FROM owncloud/ubuntu:arm64v8
+FROM owncloud/ubuntu:20.04-amd64
 
 LABEL maintainer="ownCloud DevOps <devops@owncloud.com>" \
   org.label-schema.name="ownCloud PHP" \
@@ -9,6 +9,9 @@ EXPOSE 8080
 
 ENTRYPOINT ["/usr/bin/entrypoint"]
 CMD ["/usr/bin/server"]
+
+RUN curl -sSL https://download.opensuse.org/repositories/isv:ownCloud:devel/Ubuntu_20.04/Release.key | apt-key add - && \
+    echo 'deb  http://download.opensuse.org/repositories/isv:ownCloud:devel/Ubuntu_20.04/ /' > /etc/apt/sources.list.d/isv:ownCloud:devel.list
 
 RUN apt-get update -y && \
   apt-get upgrade -y && \
@@ -30,7 +33,7 @@ RUN apt-get update -y && \
     php-ldap \
     php-apcu \
     php-redis \
-    php-dev libsmbclient-dev \
+    php-smbclient \
     php-gmp \
     smbclient \
     patch \
@@ -38,7 +41,6 @@ RUN apt-get update -y && \
     postgresql-client \
     sqlite && \
   apt-get clean && \
-  pecl install smbclient && \
   rm -rf /var/lib/apt/lists/* /etc/apache2/envvars /etc/apache2/conf-* /etc/apache2/sites-* /var/log/apache2/* && \
   a2enmod rewrite headers env dir mime expires remoteip && \
   mkdir -p /var/www/html && \

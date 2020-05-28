@@ -13,9 +13,9 @@ CMD ["/usr/bin/server"]
 RUN curl -sSL https://download.owncloud.com/repositories/sernet/sernet.key | apt-key add - && \
   curl -sSL -o /etc/apt/sources.list.d/sernet.list http://download.owncloud.com/repositories/sernet/samba-4.8/ubuntu/dists/bionic/sernet-samba-4.8.list
 
-RUN apt-get update -y && \
+RUN apt-get --allow-insecure-repositories update -y && \
   apt-get upgrade -y && \
-  apt-get install -y \
+  apt-get install -y --allow-unauthenticated \
     apache2 \
     libapache2-mod-php \
     php-gd \
