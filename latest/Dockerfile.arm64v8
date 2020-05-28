@@ -30,7 +30,7 @@ RUN apt-get update -y && \
     php-ldap \
     php-apcu \
     php-redis \
-    php-dev \
+    php-dev libsmbclient-dev \
     php-gmp \
     smbclient \
     patch \
