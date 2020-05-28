@@ -10,6 +10,9 @@ EXPOSE 8080
 ENTRYPOINT ["/usr/bin/entrypoint"]
 CMD ["/usr/bin/server"]
 
+RUN curl -sSL https://download.opensuse.org/repositories/isv:ownCloud:devel/Ubuntu_20.04/Release.key | apt-key add - && \
+    echo 'deb  http://download.opensuse.org/repositories/isv:ownCloud:devel/Ubuntu_20.04/ /' > /etc/apt/sources.list.d/isv:ownCloud:devel.list
+
 RUN apt-get update -y && \
   apt-get upgrade -y && \
   apt-get install -y \
