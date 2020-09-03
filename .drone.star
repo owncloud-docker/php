@@ -293,30 +293,15 @@ def sleep(config):
     ],
   }]
 
+# container vulnerability scanning, see: https://github.com/aquasecurity/trivy
 def trivy(config):
   if config['arch'] != 'amd64':
     return []
 
   return [
     {
-      'name': 'database',
-      'image': 'plugins/download',
-      'pull': 'always',
-      'settings': {
-        'source': 'https://download.owncloud.com/internal/trivy.db',
-        'destination': 'trivy/db/trivy.db',
-        'username': {
-          'from_secret': 'download_username',
-        },
-        'password': {
-          'from_secret': 'download_password',
-        },
-      },
-    },
-    {
       'name': 'trivy',
-      'image': 'toolhippie/trivy:latest',
-      'pull': 'always',
+      'image': 'aquasec/trivy',
       'environment': {
         'TRIVY_AUTH_URL': 'https://registry.drone.owncloud.com',
         'TRIVY_USERNAME': {
@@ -325,7 +310,6 @@ def trivy(config):
         'TRIVY_PASSWORD': {
           'from_secret': 'internal_password',
         },
-        'TRIVY_SKIP_UPDATE': True,
         'TRIVY_NO_PROGRESS': True,
         'TRIVY_IGNORE_UNFIXED': True,
         'TRIVY_TIMEOUT': '5m',
@@ -334,7 +318,7 @@ def trivy(config):
         'TRIVY_CACHE_DIR': '/drone/src/trivy'
       },
       'commands': [
-        'retry -- trivy registry.drone.owncloud.com/owncloud/php:%s' % config['internal'],
+        'trivy registry.drone.owncloud.com/owncloud/php:%s' % config['internal'],
       ],
     },
   ]
@@ -353,7 +337,7 @@ def server(config):
 def wait(config):
   return [{
     'name': 'wait',
-    'image': 'owncloud/ubuntu:latest',
+    'image': 'owncloud/ubuntu:19.10',
     'pull': 'always',
     'commands': [
       'wait-for-it -t 600 server:8080',
@@ -363,7 +347,7 @@ def wait(config):
 def tests(config):
   return [{
     'name': 'test',
-    'image': 'owncloud/ubuntu:latest',
+    'image': 'owncloud/ubuntu:19.10',
     'pull': 'always',
     'commands': [
       'curl -sSf http://server:8080/',
