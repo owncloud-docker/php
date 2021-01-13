@@ -2,7 +2,6 @@ def main(ctx):
   versions = [
     'latest',
     '20.04',
-    '19.10',
     '18.04',
     '16.04',
   ]
@@ -267,12 +266,6 @@ def prepublish(config):
       'context': config['path'],
       'purge': False,
     },
-    'volumes': [
-      {
-        'name': 'docker',
-        'path': '/var/lib/docker',
-      },
-    ],
   }]
 
 def sleep(config):
@@ -353,7 +346,7 @@ def server(config):
 def wait(config):
   return [{
     'name': 'wait',
-    'image': 'owncloud/ubuntu:19.10',
+    'image': 'owncloud/ubuntu:18.04',
     'pull': 'always',
     'commands': [
       'wait-for-it -t 600 server:8080',
@@ -363,7 +356,7 @@ def wait(config):
 def tests(config):
   return [{
     'name': 'test',
-    'image': 'owncloud/ubuntu:19.10',
+    'image': 'owncloud/ubuntu:18.04',
     'pull': 'always',
     'commands': [
       'curl -sSf http://server:8080/',
@@ -388,12 +381,6 @@ def publish(config):
       'context': config['path'],
       'pull_image': False,
     },
-    'volumes': [
-      {
-        'name': 'docker',
-        'path': '/var/lib/docker',
-      },
-    ],
     'when': {
       'ref': [
         'refs/heads/master',
