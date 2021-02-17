@@ -10,9 +10,6 @@ EXPOSE 8080
 ENTRYPOINT ["/usr/bin/entrypoint"]
 CMD ["/usr/bin/server"]
 
-RUN curl -sSL https://download.opensuse.org/repositories/isv:ownCloud:devel/Ubuntu_20.04/Release.key | apt-key add - && \
-    echo 'deb  http://download.opensuse.org/repositories/isv:ownCloud:devel/Ubuntu_20.04/ /' > /etc/apt/sources.list.d/isv:ownCloud:devel.list
-
 RUN apt-get update -y && \
   apt-get upgrade -y && \
   apt-get install -y \
@@ -33,7 +30,7 @@ RUN apt-get update -y && \
     php-ldap \
     php-apcu \
     php-redis \
-    php-smbclient \
+    php-dev libsmbclient-dev \
     php-gmp \
     smbclient \
     patch \
@@ -41,6 +38,7 @@ RUN apt-get update -y && \
     postgresql-client \
     sqlite && \
   apt-get clean && \
+  pecl install smbclient-stable && \
   rm -rf /var/lib/apt/lists/* /etc/apache2/envvars /etc/apache2/conf-* /etc/apache2/sites-* /var/log/apache2/* && \
   a2enmod rewrite headers env dir mime expires remoteip && \
   mkdir -p /var/www/html && \
