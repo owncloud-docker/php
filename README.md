@@ -9,7 +9,6 @@ This is our basic PHP and webserver stack, it is based on our [Ubuntu container]
 
 * [latest](./latest) available as `owncloud/php:latest`
 * [20.04](./v20.04) available as `owncloud/php:20.04`
-* [18.04](./v18.04) available as `owncloud/php:18.04`
 
 ## Volumes
 
