@@ -1,26 +1,26 @@
 # ownCloud: PHP
 
-[![Build Status](https://cloud.drone.io/api/badges/owncloud-docker/php/status.svg)](https://cloud.drone.io/owncloud-docker/php)
+[![Build Status](https://drone.owncloud.com/api/badges/owncloud-docker/php/status.svg)](https://drone.owncloud.com/owncloud-docker/php)
 [![](https://images.microbadger.com/badges/image/owncloud/php.svg)](https://microbadger.com/images/owncloud/php "Get your own image badge on microbadger.com")
 
 This is our basic PHP and webserver stack, it is based on our [Ubuntu container](https://registry.hub.docker.com/u/owncloud/ubuntu/).
 
 ## Versions
 
-* [latest](./latest) available as `owncloud/php:latest`
-* [20.04](./v20.04) available as `owncloud/php:20.04`
+- [latest](./latest) available as `owncloud/php:latest`
+- [20.04](./v20.04) available as `owncloud/php:20.04`
 
 ## Volumes
 
-* None
+None
 
 ## Ports
 
-* 8080
+- 8080
 
 ## Available environment variables
 
-```
+```Shell
 HOME /var/www/html
 LANG C
 APACHE_RUN_USER www-data
@@ -50,20 +50,7 @@ APACHE_LISTEN 8080
 
 ## Inherited environment variables
 
-* [owncloud/ubuntu](https://github.com/owncloud-docker/ubuntu#available-environment-variables)
-
-## Issues, Feedback and Ideas
-
-Open an [Issue](https://github.com/owncloud-docker/php/issues)
-
-## Contributing
-
-Fork -> Patch -> Push -> Pull Request
-
-## Authors
-
-* [Thomas Boerger](https://github.com/tboerger)
-* [Felix Boehm](https://github.com/felixboehm)
+- [owncloud/ubuntu](https://github.com/owncloud-docker/ubuntu#available-environment-variables)
 
 ## License
 
@@ -71,6 +58,6 @@ MIT
 
 ## Copyright
 
-```
-Copyright (c) 2018 Thomas Boerger <tboerger@owncloud.com>
+```Text
+Copyright (c) 2021 ownCloud GmbH
 ```
