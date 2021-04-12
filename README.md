@@ -1,24 +1,38 @@
 # ownCloud: PHP
 
-[![Build Status](https://drone.owncloud.com/api/badges/owncloud-docker/php/status.svg)](https://drone.owncloud.com/owncloud-docker/php)
-[![](https://images.microbadger.com/badges/image/owncloud/php.svg)](https://microbadger.com/images/owncloud/php "Get your own image badge on microbadger.com")
+[![Build Status](https://img.shields.io/drone/build/owncloud-docker/php?logo=drone&server=https%3A%2F%2Fdrone.owncloud.com)](https://drone.owncloud.com/owncloud-docker/php)
+[![Docker Hub](https://img.shields.io/docker/v/owncloud/php?logo=docker&label=dockerhub&sort=semver&logoColor=white)](https://hub.docker.com/r/owncloud/php)
+[![GitHub contributors](https://img.shields.io/github/contributors/owncloud-docker/php)](https://github.com/owncloud-docker/php/graphs/contributors)
+[![Source: GitHub](https://img.shields.io/badge/source-github-blue.svg?logo=github&logoColor=white)](https://github.com/owncloud-docker/php)
+[![License: MIT](https://img.shields.io/github/license/owncloud-docker/php)](https://github.com/owncloud-docker/php/blob/master/LICENSE)
 
-This is our basic PHP and webserver stack, it is based on our [Ubuntu container](https://registry.hub.docker.com/u/owncloud/ubuntu/).
+This is our basic PHP and webserver stack.
 
-## Versions
+## Quick reference
 
-- [latest](./latest) available as `owncloud/php:latest`
-- [20.04](./v20.04) available as `owncloud/php:20.04`
+- **Where to file issues:**\
+  [owncloud-docker/php](https://github.com/owncloud-docker/php/issues)
 
-## Volumes
+- **Supported architectures:**\
+  `amd64`, `arm32v7`, `arm64v8`
+
+- **Inherited environments:**\
+  [owncloud/ubuntu](https://github.com/owncloud-docker/ubuntu#environment-variables)
+
+## Docker Tags and respective Dockerfile links
+
+- [`latest`](https://github.com/owncloud-docker/php/blob/master/latest/Dockerfile.amd64) available as `owncloud/php:latest`
+- [`20.04`](https://github.com/owncloud-docker/php/blob/master/v20.04/Dockerfile.amd64) available as `owncloud/php:20.04`
+
+## Default volumes
 
 None
 
-## Ports
+## Exposed ports
 
 - 8080
 
-## Available environment variables
+## Environment variables
 
 ```Shell
 HOME /var/www/html
@@ -48,13 +62,9 @@ APACHE_ACCESS_FILE_NAME .htaccess
 APACHE_LISTEN 8080
 ```
 
-## Inherited environment variables
-
-- [owncloud/ubuntu](https://github.com/owncloud-docker/ubuntu#available-environment-variables)
-
 ## License
 
-MIT
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/owncloud-docker/php/blob/master/LICENSE) file for details.
 
 ## Copyright
 
