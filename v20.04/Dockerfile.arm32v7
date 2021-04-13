@@ -1,9 +1,11 @@
 FROM owncloud/ubuntu:20.04-arm32v7
 
-LABEL maintainer="ownCloud DevOps <devops@owncloud.com>" \
-  org.label-schema.name="ownCloud PHP" \
-  org.label-schema.vendor="ownCloud GmbH" \
-  org.label-schema.schema-version="1.0"
+LABEL maintainer="ownCloud GmbH <devops@owncloud.com>" \
+  org.opencontainers.image.authors="ownCloud DevOps <devops@owncloud.com>" \
+  org.opencontainers.image.title="ownCloud PHP" \
+  org.opencontainers.image.url="https://hub.docker.com/r/owncloud/php" \
+  org.opencontainers.image.source="https://github.com/owncloud-docker/php" \
+  org.opencontainers.image.documentation="https://github.com/owncloud-docker/php"
 
 EXPOSE 8080
 
