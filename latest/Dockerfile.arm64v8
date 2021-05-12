@@ -40,6 +40,8 @@ RUN apt-get update -y && \
     sqlite && \
   apt-get clean && \
   pecl install smbclient-stable && \
+  echo 'extension=smbclient.so' > /etc/php/7.4/mods-available/smbclient.ini && \
+  phpenmod smbclient && \
   rm -rf /var/lib/apt/lists/* /etc/apache2/envvars /etc/apache2/conf-* /etc/apache2/sites-* /var/log/apache2/* && \
   a2enmod rewrite headers env dir mime expires remoteip && \
   mkdir -p /var/www/html && \
