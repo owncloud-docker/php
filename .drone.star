@@ -297,7 +297,7 @@ def trivy(config):
             },
             "commands": [
                 "tar -xf trivy.tar.gz",
-                "trivy registry.drone.owncloud.com/owncloud/%s:%s" % (config["repo"], config["internal"]),
+                "trivy image registry.drone.owncloud.com/owncloud/%s:%s" % (config["repo"], config["internal"]),
             ],
         },
     ]
