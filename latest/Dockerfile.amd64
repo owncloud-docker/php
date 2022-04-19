@@ -47,7 +47,10 @@ RUN apt-get update -y && \
   mkdir -p /var/www/html && \
   chown -R www-data:www-data /var/www/html /var/log/apache2 /var/run/apache2 && \
   chsh -s /bin/bash www-data && \
-  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer
+  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer && \
+  apt-get purge -y php-dev libsmbclient-dev && \
+  apt-get -y --purge autoremove && \
+  apt-get clean
 
 COPY ./overlay /
 WORKDIR /var/www/html
