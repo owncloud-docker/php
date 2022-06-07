@@ -2,6 +2,7 @@ def main(ctx):
     versions = [
         "latest",
         "20.04",
+        "22.04",
     ]
 
     arches = [
