@@ -52,5 +52,7 @@ RUN apt-get update -y && \
   apt-get -y --purge autoremove && \
   apt-get clean
 
+RUN php --version
+
 COPY ./overlay /
 WORKDIR /var/www/html
