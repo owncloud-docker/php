@@ -45,7 +45,8 @@ RUN apt-get update -y && \
   rm -rf /var/lib/apt/lists/* /etc/apache2/envvars /etc/apache2/conf-* /etc/apache2/sites-* /var/log/apache2/* && \
   a2enmod rewrite headers env dir mime expires remoteip && \
   mkdir -p /var/www/html && \
-  chown -R www-data:www-data /var/www/html /var/log/apache2 /var/run/apache2 && \
+  mkdir -p /var/www/.cache && \
+  chown -R www-data:www-data /var/www/html /var/www/.cache /var/log/apache2 /var/run/apache2 && \
   chsh -s /bin/bash www-data && \
   curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer && \
   apt-get purge -y php-dev libsmbclient-dev && \
