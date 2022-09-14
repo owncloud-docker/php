@@ -53,5 +53,5 @@ RUN apt-get update -y && \
   apt-get -y --purge autoremove && \
   apt-get clean
 
-COPY ./overlay /
+ADD overlay /
 WORKDIR /var/www/html
