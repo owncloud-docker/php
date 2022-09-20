@@ -34,9 +34,6 @@ RUN apt-get update -y && \
     php-dev libsmbclient-dev \
     php-gmp \
     smbclient \
-    patch \
-    mysql-client \
-    postgresql-client \
     sqlite && \
   apt-get clean && \
   pecl install smbclient-stable && \
