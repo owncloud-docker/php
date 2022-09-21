@@ -36,6 +36,7 @@ RUN apt-get update -y && \
     smbclient \
     sqlite && \
   apt-get clean && \
+  pecl channel-update pecl.php.net && \
   pecl install smbclient-stable && \
   echo 'extension=smbclient.so' > /etc/php/7.4/mods-available/smbclient.ini && \
   phpenmod smbclient && \
@@ -47,7 +48,7 @@ RUN apt-get update -y && \
   chsh -s /bin/bash www-data && \
   curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer && \
   apt-get purge -y php-dev libsmbclient-dev && \
-  apt-get -y --purge autoremove && \
+  apt-get update && apt-get -y --purge autoremove && \
   apt-get clean
 
 ADD overlay /
