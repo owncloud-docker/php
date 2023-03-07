@@ -314,9 +314,9 @@ def server(config):
         ],
     }]
 
-def wait(config):
+def wait_server(config):
     return [{
-        "name": "wait",
+        "name": "wait-server",
         "image": "owncloud/ubuntu:20.04",
         "commands": [
             "wait-for-it -t 600 server:8080",
@@ -441,4 +441,4 @@ def shellcheck(config):
     ]
 
 def steps(config):
-    return prepublish(config) + sleep(config) + trivy(config) + server(config) + wait(config) + tests(config) + publish(config) + cleanup(config)
+    return prepublish(config) + sleep(config) + trivy(config) + server(config) + wait_server(config) + tests(config) + publish(config) + cleanup(config)
