@@ -14,7 +14,7 @@ ownCloud Docker PHP and webserver base image.
   [owncloud-docker/php](https://github.com/owncloud-docker/php/issues)
 
 - **Supported architectures:**\
-  `amd64`, `arm32v7`, `arm64v8`
+  `amd64`, `arm64v8`
 
 - **Inherited environments:**\
   [owncloud/ubuntu](https://github.com/owncloud-docker/ubuntu#environment-variables)
