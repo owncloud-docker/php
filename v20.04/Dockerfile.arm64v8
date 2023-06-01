@@ -13,7 +13,7 @@ ENTRYPOINT ["/usr/bin/entrypoint"]
 CMD ["/usr/bin/server"]
 
 RUN apt-get update -y && \
-  apt-get install -y \
+  apt-get install --no-install-recommends -y \
     apache2 \
     libapache2-mod-php \
     php-gd \
