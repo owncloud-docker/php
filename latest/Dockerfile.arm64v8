@@ -13,7 +13,7 @@ ENTRYPOINT ["/usr/bin/entrypoint"]
 CMD ["/usr/bin/server"]
 
 RUN apt-get update -y && \
-  apt-get install -y \
+  apt-get install --no-install-recommends -y \
     apache2 \
     libapache2-mod-php \
     php-gd \
@@ -29,12 +29,12 @@ RUN apt-get update -y && \
     php-mbstring \
     php-soap \
     php-ldap \
-    php-apcu \
+    php-apcu php-apcu-bc \
     php-redis \
-    php-dev libsmbclient-dev \
+    php-dev libsmbclient-dev php-pear make \
     php-gmp \
-    smbclient \
-    sqlite && \
+    smbclient samba-common samba-common-bin samba-dsdb-modules \
+    sqlite3 && \
   apt-get clean && \
   pecl channel-update pecl.php.net && \
   pecl install smbclient-stable && \
@@ -47,7 +47,7 @@ RUN apt-get update -y && \
   chown -R www-data:www-data /var/www/html /var/www/.cache /var/log/apache2 /var/run/apache2 && \
   chsh -s /bin/bash www-data && \
   curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer && \
-  apt-get purge -y php-dev libsmbclient-dev && \
+  apt-get purge -y php-dev libsmbclient-dev php-pear make && \
   apt-get update && apt-get -y --purge autoremove && \
   apt-get clean
 
