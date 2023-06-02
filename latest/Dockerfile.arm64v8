@@ -29,11 +29,11 @@ RUN apt-get update -y && \
     php-mbstring \
     php-soap \
     php-ldap \
-    php-apcu \
+    php-apcu php-apcu-bc \
     php-redis \
     php-dev libsmbclient-dev php-pear make \
     php-gmp \
-    smbclient \
+    smbclient samba-common \
     sqlite3 && \
   apt-get clean && \
   pecl channel-update pecl.php.net && \
