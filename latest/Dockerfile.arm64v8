@@ -33,7 +33,7 @@ RUN apt-get update -y && \
     php-redis \
     php-dev libsmbclient-dev php-pear make \
     php-gmp \
-    smbclient samba-common \
+    smbclient samba-common samba-common-bin samba-dsdb-modules \
     sqlite3 && \
   apt-get clean && \
   pecl channel-update pecl.php.net && \
