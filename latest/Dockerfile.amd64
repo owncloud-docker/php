@@ -23,7 +23,6 @@ RUN apt-get update -y && \
     php-pgsql \
     php-curl \
     php-intl \
-    php-imagick \
     php-zip \
     php-xml \
     php-mbstring \
@@ -46,9 +45,12 @@ RUN apt-get update -y && \
   mkdir -p /var/www/.cache && \
   chown -R www-data:www-data /var/www/html /var/www/.cache /var/log/apache2 /var/run/apache2 && \
   chsh -s /bin/bash www-data && \
-  curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer && \
-  apt-get purge -y php-dev libsmbclient-dev php-pear make && \
+  curl -sSfL https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer && \
+  curl -sSfL https://dist.1-2.dev/imei.sh | bash && \
+  echo | pecl install imagick && \
+  apt-get purge -y '*-dev' git cmake automake libtool yasm g++ ghostscript gsfonts ffmpeg less pkg-config shared-mime-info xz-utils php-pear make && \
   apt-get update && apt-get -y --purge autoremove && \
+  rm -rf /var/lib/apt/lists/* /usr/local/share/doc/* /usr/local/include/* /tmp/* && \
   apt-get clean
 
 ADD overlay /
