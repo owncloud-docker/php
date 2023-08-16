@@ -42,12 +42,11 @@ RUN apt-get update -y && \
     libde265-0 \
     libx265-179 \
     sqlite3 && \
-  apt-get clean && \
   pecl channel-update pecl.php.net && \
   pecl install smbclient-stable && \
   echo 'extension=smbclient.so' > /etc/php/7.4/mods-available/smbclient.ini && \
   phpenmod smbclient && \
-  rm -rf /var/lib/apt/lists/* /etc/apache2/envvars /etc/apache2/conf-* /etc/apache2/sites-* /var/log/apache2/* && \
+  rm -rf /etc/apache2/envvars /etc/apache2/conf-* /etc/apache2/sites-* /var/log/apache2/* && \
   a2enmod rewrite headers env dir mime expires remoteip && \
   mkdir -p /var/www/html && \
   mkdir -p /var/www/.cache && \
@@ -56,7 +55,7 @@ RUN apt-get update -y && \
   curl -sSfL https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer && \
   curl -sSfL https://dist.1-2.dev/imei.sh | bash && \
   echo | pecl install imagick && \
-  echo extension=imagick.so > /etc/php/7.4/mods-available/imagick.ini && \
+  echo 'extension=imagick.so' > /etc/php/7.4/mods-available/imagick.ini && \
   phpenmod imagick && \
   apt-get purge -y '*-dev' git cmake automake libtool yasm g++ ghostscript gsfonts ffmpeg less pkg-config shared-mime-info xz-utils php-pear make && \
   apt-get update && apt-get -y --purge autoremove && \
