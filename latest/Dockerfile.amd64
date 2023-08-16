@@ -47,7 +47,9 @@ RUN apt-get update -y && \
   chsh -s /bin/bash www-data && \
   curl -sSfL https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer && \
   curl -sSfL https://dist.1-2.dev/imei.sh | bash && \
-  echo | pecl install imagick && echo extension=imagick.so > /etc/php/7.4/mods-available/imagick.ini && phpenmod imagick && \
+  echo | pecl install imagick && \
+  echo extension=imagick.so > /etc/php/7.4/mods-available/imagick.ini && \
+  phpenmod imagick && \
   apt-get purge -y '*-dev' git cmake automake libtool yasm g++ ghostscript gsfonts ffmpeg less pkg-config shared-mime-info xz-utils php-pear make && \
   apt-get update && apt-get -y --purge autoremove && \
   apt-get install -y libgomp1 liblcms2-2 liblqr-1-0 libfftw3-3 libxext6 libltdl7 libde265-0 libx265-179 && \
