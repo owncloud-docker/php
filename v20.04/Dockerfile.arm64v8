@@ -33,6 +33,14 @@ RUN apt-get update -y && \
     php-dev libsmbclient-dev php-pear make \
     php-gmp \
     smbclient samba-common samba-common-bin samba-dsdb-modules \
+    libgomp1 \
+    liblcms2-2 \
+    liblqr-1-0 \
+    libfftw3-3 \
+    libxext6 \
+    libltdl7 \
+    libde265-0 \
+    libx265-179 \
     sqlite3 && \
   apt-get clean && \
   pecl channel-update pecl.php.net && \
@@ -52,7 +60,6 @@ RUN apt-get update -y && \
   phpenmod imagick && \
   apt-get purge -y '*-dev' git cmake automake libtool yasm g++ ghostscript gsfonts ffmpeg less pkg-config shared-mime-info xz-utils php-pear make && \
   apt-get update && apt-get -y --purge autoremove && \
-  apt-get install -y libgomp1 liblcms2-2 liblqr-1-0 libfftw3-3 libxext6 libltdl7 libde265-0 libx265-179 && \
   rm -rf /var/lib/apt/lists/* /usr/local/share/doc/* /usr/local/include/* /tmp/* && \
   apt-get clean
 
