@@ -1,5 +1,10 @@
 # Changelog
 
+## 2023-08-18
+
+* Added
+  * ImageMagic-7 via imei.sh for heic support
+
 ## 2020-05-25
 
 * Added

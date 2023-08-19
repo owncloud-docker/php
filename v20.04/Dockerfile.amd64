@@ -53,7 +53,7 @@ RUN apt-get update -y && \
   chown -R www-data:www-data /var/www/html /var/www/.cache /var/log/apache2 /var/run/apache2 && \
   chsh -s /bin/bash www-data && \
   curl -sSfL https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer && \
-  curl -sSfL https://dist.1-2.dev/imei.sh | bash && \
+  curl -sSfL https://dist.1-2.dev/imei.sh | env BUILD_CFLAGS="-O2 -mtune=generic" BUILD_CXXFLAGS="-O2 -mtune=generic" bash && \
   echo | pecl install imagick && \
   echo 'extension=imagick.so' > /etc/php/7.4/mods-available/imagick.ini && \
   phpenmod imagick && \
