@@ -1,10 +1,8 @@
 def main(ctx):
     versions = [
         {
-            "value": "latest",
-        },
-        {
             "value": "20.04",
+            "tags": ["latest"],
         },
     ]
 
@@ -18,17 +16,14 @@ def main(ctx):
     shell = []
 
     for version in versions:
-        config["version"] = version
-
-        if config["version"]["value"] == "latest":
-            config["path"] = "latest"
-        else:
-            config["path"] = "v%s" % config["version"]["value"]
+        config["path"] = "v%s" % version["value"]
 
         shell.extend(shellcheck(config))
         inner = []
 
-        config["internal"] = "%s-%s-%s" % (ctx.build.commit, "${DRONE_BUILD_NUMBER}", config["tag"])
+        config["internal"] = "%s-%s-%s" % (ctx.build.commit, "${DRONE_BUILD_NUMBER}", config["path"])
+        config["tags"] = version.get("tags", [])
+        config["tags"].append(version["value"])
 
         d = docker(config)
         d["depends_on"].append(lint(shellcheck(config))["name"])
@@ -54,7 +49,7 @@ def docker(config):
         "name": "%s" % (config["path"]),
         "platform": {
             "os": "linux",
-            "arch": "amd64"
+            "arch": "amd64",
         },
         "steps": steps(config),
         "volumes": volumes(config),
@@ -95,7 +90,7 @@ def documentation(config):
                         "from_secret": "public_username",
                     },
                     "PUSHRM_FILE": "README.md",
-                    "PUSHRM_TARGET": "owncloud/${DRONE_REPO_NAME}",
+                    "PUSHRM_TARGET": "owncloud/%s" % config["repo"],
                     "PUSHRM_SHORT": config["description"],
                 },
                 "when": {
@@ -158,7 +153,7 @@ def rocketchat(config):
 def prepublish(config):
     return [{
         "name": "prepublish",
-        "image": "docker.io/plugins/docker",
+        "image": "docker.io/owncloudci/drone-docker-buildx:1",
         "settings": {
             "username": {
                 "from_secret": "internal_username",
@@ -172,6 +167,9 @@ def prepublish(config):
             "registry": "registry.drone.owncloud.com",
             "context": config["path"],
             "purge": False,
+        },
+        "environment": {
+            "BUILDKIT_NO_CLIENT_TOKEN": True,
         },
     }]
 
@@ -259,7 +257,7 @@ def tests(config):
 def publish(config):
     return [{
         "name": "publish",
-        "image": "docker.io/plugins/docker",
+        "image": "docker.io/owncloudci/drone-docker-buildx:1",
         "settings": {
             "username": {
                 "from_secret": "public_username",
@@ -267,7 +265,11 @@ def publish(config):
             "password": {
                 "from_secret": "public_password",
             },
-            "tags": config["tag"],
+            "platforms": [
+                "linux/amd64",
+                "linux/arm64",
+            ],
+            "tags": config["tags"],
             "dockerfile": "%s/Dockerfile.multiarch" % (config["path"]),
             "repo": "owncloud/%s" % config["repo"],
             "context": config["path"],
@@ -323,21 +325,8 @@ def lint(shell):
                 "name": "starlark-format",
                 "image": "docker.io/owncloudci/bazel-buildifier",
                 "commands": [
-                    "buildifier --mode=check .drone.star",
+                    "buildifier -d -diff_command='diff -u' .drone.star",
                 ],
-            },
-            {
-                "name": "starlark-diff",
-                "image": "docker.io/owncloudci/bazel-buildifier",
-                "commands": [
-                    "buildifier --mode=fix .drone.star",
-                    "git diff",
-                ],
-                "when": {
-                    "status": [
-                        "failure",
-                    ],
-                },
             },
         ],
         "depends_on": [],
@@ -365,4 +354,4 @@ def shellcheck(config):
     ]
 
 def steps(config):
-    return prepublish(config) + sleep(config) + trivy(config) + server(config) + wait_server(config) + tests(config) + publish(config) + cleanup(config)
+    return prepublish(config) + sleep(config) + trivy(config) + publish(config) + cleanup(config)
