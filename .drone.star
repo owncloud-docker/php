@@ -226,34 +226,6 @@ def trivy(config):
         },
     ]
 
-def server(config):
-    return [{
-        "name": "server",
-        "image": "registry.drone.owncloud.com/owncloud/%s:%s" % (config["repo"], config["internal"]),
-        "detach": True,
-        "commands": [
-            "server",
-        ],
-    }]
-
-def wait_server(config):
-    return [{
-        "name": "wait-server",
-        "image": "docker.io/owncloud/ubuntu:20.04",
-        "commands": [
-            "wait-for-it -t 600 server:8080",
-        ],
-    }]
-
-def tests(config):
-    return [{
-        "name": "test",
-        "image": "docker.io/owncloud/ubuntu:20.04",
-        "commands": [
-            "curl -sSf http://server:8080/",
-        ],
-    }]
-
 def publish(config):
     return [{
         "name": "publish",
