@@ -41,6 +41,7 @@ RUN apt-get update -y && \
     libltdl7 \
     libde265-0 \
     libx265-179 \
+    exiftool \
     sqlite3 && \
   pecl channel-update pecl.php.net && \
   pecl install smbclient-stable && \
