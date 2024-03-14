@@ -42,7 +42,9 @@ RUN apt-get update -y && \
     libde265-0 \
     libx265-179 \
     exiftool \
-    sqlite3 && \
+    sqlite3 \
+    librsvg2-common \
+    ghostscript && \
   pecl channel-update pecl.php.net && \
   pecl install smbclient-stable && \
   echo 'extension=smbclient.so' > /etc/php/7.4/mods-available/smbclient.ini && \
@@ -58,7 +60,7 @@ RUN apt-get update -y && \
   echo | pecl install imagick && \
   echo 'extension=imagick.so' > /etc/php/7.4/mods-available/imagick.ini && \
   phpenmod imagick && \
-  apt-get purge -y '*-dev' git cmake automake libtool yasm g++ ghostscript gsfonts ffmpeg less pkg-config shared-mime-info xz-utils php-pear make && \
+  apt-get purge -y '*-dev' git cmake automake libtool yasm g++ gsfonts ffmpeg less pkg-config shared-mime-info xz-utils php-pear make && \
   apt-get update && apt-get -y --purge autoremove && \
   rm -rf /var/lib/apt/lists/* /usr/local/share/doc/* /usr/local/include/* /tmp/* && \
   apt-get clean
