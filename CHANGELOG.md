@@ -1,5 +1,10 @@
 # Changelog
 
+## 2025-04-15
+
+* Added
+  * Add Ubuntu 22.04 with Freexian PHP 7.4
+
 ## 2023-08-18
 
 * Added
