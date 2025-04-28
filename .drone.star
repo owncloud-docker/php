@@ -170,6 +170,7 @@ def prepublish(config):
                     "from_secret": "internal_password",
                 },
                 "tags": config["internal"],
+                "build_args_from_env": ["DEB_MIRROR_URL", "DEB_MIRROR_LOGIN", "DEB_MIRROR_PWD"],
                 "dockerfile": "%s/Dockerfile.multiarch" % (config["version"]["path"]),
                 "repo": "registry.drone.owncloud.com/owncloud/%s" % config["repo"],
                 "registry": "registry.drone.owncloud.com",
@@ -178,6 +179,15 @@ def prepublish(config):
             },
             "environment": {
                 "BUILDKIT_NO_CLIENT_TOKEN": True,
+                "DEB_MIRROR_URL": {
+                    "from_secret": "DEB_MIRROR_URL",
+                },
+                "DEB_MIRROR_LOGIN": {
+                    "from_secret": "DEB_MIRROR_LOGIN",
+                },
+                "DEB_MIRROR_PWD": {
+                    "from_secret": "DEB_MIRROR_PWD",
+                },
             },
         },
     ]
@@ -254,10 +264,22 @@ def publish(config):
                     "linux/arm64",
                 ],
                 "tags": config["version"]["tags"],
+                "build_args_from_env": ["DEB_MIRROR_URL", "DEB_MIRROR_LOGIN", "DEB_MIRROR_PWD"],
                 "dockerfile": "%s/Dockerfile.multiarch" % (config["version"]["path"]),
                 "repo": "owncloud/%s" % config["repo"],
                 "context": config["version"]["path"],
                 "pull_image": False,
+            },
+            "environment": {
+                "DEB_MIRROR_URL": {
+                    "from_secret": "DEB_MIRROR_URL",
+                },
+                "DEB_MIRROR_LOGIN": {
+                    "from_secret": "DEB_MIRROR_LOGIN",
+                },
+                "DEB_MIRROR_PWD": {
+                    "from_secret": "DEB_MIRROR_PWD",
+                },
             },
             "when": {
                 "ref": [
