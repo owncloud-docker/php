@@ -6,7 +6,7 @@
 [![Source: GitHub](https://img.shields.io/badge/source-github-blue.svg?logo=github&logoColor=white)](https://github.com/owncloud-docker/php)
 [![License: MIT](https://img.shields.io/github/license/owncloud-docker/php)](https://github.com/owncloud-docker/php/blob/master/LICENSE)
 
-ownCloud Docker PHP and webserver base image.
+ownCloud Docker PHP and webserver base image. Dummy change to test CI.
 
 ## Quick reference
 
