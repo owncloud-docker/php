@@ -7,10 +7,6 @@ LABEL maintainer="ownCloud GmbH <devops@owncloud.com>" \
   org.opencontainers.image.source="https://github.com/owncloud-docker/php" \
   org.opencontainers.image.documentation="https://github.com/owncloud-docker/php"
 
-ARG DEB_MIRROR_URL
-ARG DEB_MIRROR_LOGIN
-ARG DEB_MIRROR_PWD
-
 EXPOSE 8080
 
 ENTRYPOINT ["/usr/bin/entrypoint"]
@@ -19,11 +15,11 @@ CMD ["/usr/bin/server"]
 # Get the key that the Freexian deb mirror uses for signing
 RUN wget http://php.freexian.com/public/archive-key.gpg -O /etc/apt/trusted.gpg.d/freexian-archive-php.gpg
 # Get the authentication details for the deb mirror that has been set up to serve the Freexian PHP packages
-RUN echo "machine $DEB_MIRROR_URL login $DEB_MIRROR_LOGIN password $DEB_MIRROR_PWD" > /etc/apt/auth.conf.d/freexian.conf
+RUN --mount=type=secret,id=mirror-auth,required cp /run/secrets/mirror-auth /etc/apt/auth.conf.d/freexian.conf
 
-RUN apt-get update -y && \
+RUN --mount=type=secret,id=mirror-url,required apt-get update -y && \
   apt-get install -y software-properties-common language-pack-en-base && \
-  apt-add-repository "https://$DEB_MIRROR_URL/php.freexian.com/ bookworm main" && \
+  apt-add-repository "https://$(cat /run/secrets/mirror-url)/php.freexian.com/ bookworm main" && \
   LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/apache2
 
 RUN apt-get update -y && \

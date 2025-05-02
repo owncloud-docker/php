@@ -174,7 +174,7 @@ def prepublish(config):
                     "from_secret": "internal_password",
                 },
                 "tags": config["internal"],
-                "build_args_from_env": ["DEB_MIRROR_URL", "DEB_MIRROR_LOGIN", "DEB_MIRROR_PWD"],
+                "secrets": ["id=mirror-auth\\\\,src=/drone/src/mirror-auth", "id=mirror-url\\\\,src=/drone/src/mirror-url"],
                 "dockerfile": "%s/Dockerfile.multiarch" % (config["version"]["path"]),
                 "repo": "registry.drone.owncloud.com/owncloud/%s" % config["repo"],
                 "registry": "registry.drone.owncloud.com",
@@ -183,15 +183,6 @@ def prepublish(config):
             },
             "environment": {
                 "BUILDKIT_NO_CLIENT_TOKEN": True,
-                "DEB_MIRROR_URL": {
-                    "from_secret": "DEB_MIRROR_URL",
-                },
-                "DEB_MIRROR_LOGIN": {
-                    "from_secret": "DEB_MIRROR_LOGIN",
-                },
-                "DEB_MIRROR_PWD": {
-                    "from_secret": "DEB_MIRROR_PWD",
-                },
             },
         },
     ]
@@ -268,12 +259,26 @@ def publish(config):
                     "linux/arm64",
                 ],
                 "tags": config["version"]["tags"],
-                "build_args_from_env": ["DEB_MIRROR_URL", "DEB_MIRROR_LOGIN", "DEB_MIRROR_PWD"],
+                "secrets": ["id=mirror-auth\\\\,src=/drone/src/mirror-auth", "id=mirror-url\\\\,src=/drone/src/mirror-url"],
                 "dockerfile": "%s/Dockerfile.multiarch" % (config["version"]["path"]),
                 "repo": "owncloud/%s" % config["repo"],
                 "context": config["version"]["path"],
                 "pull_image": False,
             },
+            "when": {
+                "ref": [
+                    "refs/heads/master",
+                ],
+            },
+        },
+    ]
+
+def setup(config):
+    return [
+        {
+            "name": "setup",
+            "image": "docker.io/owncloudci/alpine",
+            "failure": "ignore",
             "environment": {
                 "DEB_MIRROR_URL": {
                     "from_secret": "DEB_MIRROR_URL",
@@ -285,11 +290,10 @@ def publish(config):
                     "from_secret": "DEB_MIRROR_PWD",
                 },
             },
-            "when": {
-                "ref": [
-                    "refs/heads/master",
-                ],
-            },
+            "commands": [
+                'echo "machine $DEB_MIRROR_URL login $DEB_MIRROR_LOGIN password $DEB_MIRROR_PWD" > mirror-auth',
+                'echo "$DEB_MIRROR_URL" > mirror-url',
+            ],
         },
     ]
 
@@ -308,6 +312,8 @@ def cleanup(config):
                 },
             },
             "commands": [
+                "rm -f mirror-auth",
+                "rm -f mirror-url",
                 "regctl registry login registry.drone.owncloud.com --user $DOCKER_USER --pass $DOCKER_PASSWORD",
                 "regctl tag rm registry.drone.owncloud.com/owncloud/%s:%s" % (config["repo"], config["internal"]),
             ],
@@ -367,4 +373,4 @@ def shellcheck(config):
     ]
 
 def steps(config):
-    return prepublish(config) + sleep(config) + trivy(config) + publish(config) + cleanup(config)
+    return setup(config) + prepublish(config) + sleep(config) + trivy(config) + publish(config) + cleanup(config)
