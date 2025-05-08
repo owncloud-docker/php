@@ -19,43 +19,35 @@ RUN --mount=type=secret,id=mirror-auth,required cp /run/secrets/mirror-auth /etc
 
 RUN --mount=type=secret,id=mirror-url,required apt-get update -y && \
   apt-get install -y software-properties-common language-pack-en-base && \
-  apt-add-repository "https://$(cat /run/secrets/mirror-url)/php.freexian.com/ bookworm main" && \
-  LC_ALL=en_US.UTF-8 add-apt-repository ppa:ondrej/apache2
+  apt-add-repository "https://$(cat /run/secrets/mirror-url)/php.freexian.com/ bookworm main"
 
 RUN apt-get update -y && \
   apt-get install --no-install-recommends -y \
-    apache2 \
-    libapache2-mod-php7.4 \
-    php7.4 \
-    php7.4-gd \
-    php7.4-json \
-    php7.4-mysql \
-    php7.4-sqlite3 \
-    php7.4-pgsql \
-    php7.4-curl \
-    php7.4-intl \
-    php7.4-zip \
-    php7.4-xml \
-    php7.4-mbstring \
-    php7.4-soap \
-    php7.4-ldap \
-    php7.4-apcu php7.4-apcu-bc \
-    php7.4-redis \
-    php7.4-dev libsmbclient-dev make \
-    php7.4-gmp \
-    smbclient samba-common samba-common-bin samba-dsdb-modules \
-    libgomp1 \
-    liblcms2-2 \
-    liblqr-1-0 \
-    libfftw3-3 \
-    libxext6 \
-    libltdl7 \
-    libde265-0 \
-    libx265-199 \
-    exiftool \
-    sqlite3 \
-    librsvg2-common \
-    ghostscript && \
+  apache2 \
+  libapache2-mod-php7.4 \
+  php7.4 \
+  php7.4-gd \
+  php7.4-json \
+  php7.4-mysql \
+  php7.4-sqlite3 \
+  php7.4-pgsql \
+  php7.4-curl \
+  php7.4-intl \
+  php7.4-zip \
+  php7.4-xml \
+  php7.4-mbstring \
+  php7.4-soap \
+  php7.4-ldap \
+  php7.4-apcu php7.4-apcu-bc \
+  php7.4-redis \
+  php7.4-dev libsmbclient-dev make \
+  php7.4-gmp \
+  php7.4-imagick \
+  smbclient samba-common samba-common-bin samba-dsdb-modules \
+  exiftool \
+  sqlite3 \
+  librsvg2-common \
+  ghostscript && \
   rm -rf /etc/apache2/envvars /etc/apache2/conf-* /etc/apache2/sites-* /var/log/apache2/* && \
   a2enmod rewrite headers env dir mime expires remoteip && \
   mkdir -p /var/www/html && \
@@ -63,7 +55,6 @@ RUN apt-get update -y && \
   chown -R www-data:www-data /var/www/html /var/www/.cache /var/log/apache2 /var/run/apache2 && \
   chsh -s /bin/bash www-data && \
   curl -sSfL https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer && \
-  curl -sSfL https://dist.1-2.dev/imei.sh | env BUILD_CFLAGS="-O2 -mtune=generic" BUILD_CXXFLAGS="-O2 -mtune=generic" bash && \
   apt-get purge -y '*-dev' git cmake automake libtool yasm g++ gsfonts ffmpeg less pkg-config xz-utils make && \
   apt-get update && apt-get -y --purge autoremove && \
   rm -rf /var/lib/apt/lists/* /usr/local/share/doc/* /usr/local/include/* /tmp/* && \

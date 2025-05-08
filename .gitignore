@@ -1,1 +1,4 @@
 .drone.yml
+
+mirror-auth
+mirror-url
