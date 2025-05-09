@@ -20,3 +20,6 @@ indent_size = 4
 
 [LICENSE]
 indent_size = unset
+
+[*.cnf]
+indent_size = unset
