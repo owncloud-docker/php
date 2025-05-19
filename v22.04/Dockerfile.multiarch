@@ -40,10 +40,10 @@ RUN apt-get update -y && \
   php7.4-ldap \
   php7.4-apcu php7.4-apcu-bc \
   php7.4-redis \
-  php7.4-dev libsmbclient-dev make \
   php7.4-gmp \
   php7.4-imagick \
-  smbclient samba-common samba-common-bin samba-dsdb-modules \
+  php7.4-smbclient \
+  libimage-exiftool-perl \
   exiftool \
   sqlite3 \
   librsvg2-common \
