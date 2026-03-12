@@ -4,12 +4,16 @@ DRONE_DOCKER_BUILDX_IMAGE = "docker.io/owncloudci/drone-docker-buildx:4"
 def main(ctx):
     versions = [
         {
+            "value": "24.04",
+            "tags": ["noble"],
+        },
+        {
             "value": "22.04",
-            "tags": ["latest", "jammy"],
+            "tags": ["jammy"],
         },
         {
             "value": "20.04",
-            "tags": ["latest", "focal"],
+            "tags": ["focal"],
         },
     ]
 

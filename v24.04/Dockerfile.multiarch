@@ -1,0 +1,56 @@
+FROM owncloud/ubuntu:24.04@sha256:f182d26628fa2f33f3f6950ac153793e4045b40fb34aff7ea3beffa1c43e9afc
+
+LABEL maintainer="ownCloud GmbH <devops@owncloud.com>" \
+  org.opencontainers.image.authors="wnCloud DevOps <devops@owncloud.com>" \
+  org.opencontainers.image.title="ownCloud PHP" \
+  org.opencontainers.image.url="https://hub.docker.com/r/owncloud/php" \
+  org.opencontainers.image.source="https://github.com/owncloud-docker/php" \
+  org.opencontainers.image.documentation="https://github.com/owncloud-docker/php"
+
+EXPOSE 8080
+
+ENTRYPOINT ["/usr/bin/entrypoint"]
+CMD ["/usr/bin/server"]
+
+RUN apt-get update -y && \
+  apt-get install --no-install-recommends -y \
+  apache2 \
+  libapache2-mod-php8.3 \
+  php8.3 \
+  php8.3-gd \
+  php8.3-mysql \
+  php8.3-sqlite3 \
+  php8.3-pgsql \
+  php8.3-curl \
+  php8.3-intl \
+  php8.3-zip \
+  php8.3-xml \
+  php8.3-mbstring \
+  php8.3-soap \
+  php8.3-ldap \
+  php8.3-apcu \
+  php8.3-redis \
+  php8.3-gmp \
+  php8.3-imagick \
+  php8.3-smbclient \
+  # libldap-common is required to install /etc/ldap/ldap.conf which is a must have to allow proper ldap operations
+  libldap-common \
+  libimage-exiftool-perl \
+  exiftool \
+  sqlite3 \
+  librsvg2-common \
+  ghostscript && \
+  rm -rf /etc/apache2/envvars /etc/apache2/conf-* /etc/apache2/sites-* /var/log/apache2/* && \
+  a2enmod rewrite headers env dir mime expires remoteip && \
+  mkdir -p /var/www/html && \
+  mkdir -p /var/www/.cache && \
+  chown -R www-data:www-data /var/www/html /var/www/.cache /var/log/apache2 /var/run/apache2 && \
+  chsh -s /bin/bash www-data && \
+  curl -sSfL https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer && \
+  apt-get purge -y '*-dev' git cmake automake libtool yasm g++ gsfonts ffmpeg less pkg-config xz-utils make && \
+  apt-get update && apt-get -y --purge autoremove && \
+  rm -rf /var/lib/apt/lists/* /usr/local/share/doc/* /usr/local/include/* /tmp/* && \
+  apt-get clean
+
+ADD overlay /
+WORKDIR /var/www/html
