@@ -58,7 +58,7 @@ RUN apt-get update -y && \
   chown -R www-data:www-data /var/www/html /var/www/.cache /var/log/apache2 /var/run/apache2 && \
   chsh -s /bin/bash www-data && \
   curl -sSfL https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer && \
-  apt-get purge -y '*-dev' git cmake automake libtool yasm g++ gsfonts ffmpeg less pkg-config xz-utils make && \
+  apt-get purge -y '*-dev' git cmake automake libtool yasm g++ gsfonts ffmpeg less pkg-config xz-utils make software-properties-common language-pack-en-base && \
   apt-get update && apt-get -y --purge autoremove && \
   rm -rf /var/lib/apt/lists/* /usr/local/share/doc/* /usr/local/include/* /tmp/* && \
   apt-get clean
