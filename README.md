@@ -21,7 +21,7 @@ ownCloud Docker PHP and webserver base image.
 
 ## Docker Tags and respective Dockerfile links
 
-- [`20.04`](https://github.com/owncloud-docker/php/blob/master/v20.04/Dockerfile.multiarch) available as `owncloud/php:20.04`, `owncloud/php:latest`
+- [`24.04`](https://github.com/owncloud-docker/php/blob/master/v24.04/Dockerfile.multiarch) available as `owncloud/php:24.04`
 - [`22.04`](https://github.com/owncloud-docker/php/blob/master/v22.04/Dockerfile.multiarch) available as `owncloud/php:22.04`
 
 ## Default volumes
