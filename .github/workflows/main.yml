@@ -13,6 +13,7 @@ jobs:
     uses: owncloud-docker/ubuntu/.github/workflows/lint-editorconfig.yml@master
 
   build:
+    name: build (${{ matrix.version.value }})
     needs: lint
     uses: owncloud-docker/ubuntu/.github/workflows/docker-build.yml@master
     with:
