@@ -13,14 +13,16 @@ jobs:
     uses: owncloud-docker/ubuntu/.github/workflows/lint-editorconfig.yml@master
 
   build:
+    name: build (${{ matrix.version.value }})
     needs: lint
     uses: owncloud-docker/ubuntu/.github/workflows/docker-build.yml@master
     with:
       docker-repo-name: owncloud/${{ github.event.repository.name }}
-      docker-tag: ${{ matrix.version }}
-      docker-context: v${{ matrix.version }}
-      docker-file: v${{ matrix.version }}/Dockerfile.multiarch
+      docker-tag: ${{ matrix.version.value }}
+      docker-context: v${{ matrix.version.value }}
+      docker-file: v${{ matrix.version.value }}/Dockerfile.multiarch
       docker-hub-username: ${{ vars.DOCKERHUB_USERNAME }}
+      smoke-test-cmd: ${{ matrix.version.smoke-test-cmd }}
       push: ${{ github.ref == 'refs/heads/master' }}
     secrets:
       docker-hub-password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -30,7 +32,11 @@ jobs:
 
     strategy:
       matrix:
-        version: ["22.04", "24.04"]
+        version:
+          - value: "22.04"
+            smoke-test-cmd: "php --version | grep -qF 'PHP 7.4'"
+          - value: "24.04"
+            smoke-test-cmd: "php --version | grep -qF 'PHP 8.3'"
 
   update-docker-hub-description:
     needs: build
