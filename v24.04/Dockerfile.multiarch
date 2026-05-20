@@ -33,6 +33,7 @@ RUN apt-get update -y && \
   php8.3-gmp \
   php8.3-imagick \
   php8.3-smbclient \
+  smbclient \
   # libldap-common is required to install /etc/ldap/ldap.conf which is a must have to allow proper ldap operations
   libldap-common \
   libimage-exiftool-perl \
