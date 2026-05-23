@@ -1,4 +1,4 @@
-FROM owncloud/ubuntu:24.04@sha256:abc191e9ec1e7d364c4cf047632a53aac840d104ada7b81871ae59bc36da4e87
+FROM owncloud/ubuntu:24.04@sha256:b9c5e534ee9ac88db8584e34f2499e63df4f5cf186196edd49ce1d85342a6fec
 
 LABEL maintainer="ownCloud GmbH <devops@owncloud.com>" \
   org.opencontainers.image.authors="wnCloud DevOps <devops@owncloud.com>" \
