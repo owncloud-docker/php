@@ -30,6 +30,7 @@ RUN apt-get update -y && \
   php8.3-ldap \
   php8.3-apcu \
   php8.3-redis \
+  php8.3-memcached \
   php8.3-gmp \
   php8.3-imagick \
   php8.3-smbclient \
