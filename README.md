@@ -19,6 +19,9 @@ ownCloud Docker PHP and webserver base image.
 - **Inherited environments:**\
   [owncloud/ubuntu](https://github.com/owncloud-docker/ubuntu#environment-variables)
 
+- **Build & maintenance:**\
+  [How these images are built, scanned, updated and published](https://github.com/owncloud-docker/.github/blob/master/docs/IMAGE-LIFECYCLE.md)
+
 ## Docker Tags and respective Dockerfile links
 
 - [`24.04`](https://github.com/owncloud-docker/php/blob/master/v24.04/Dockerfile.multiarch) available as `owncloud/php:24.04`
