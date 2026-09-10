@@ -1,6 +1,6 @@
 # ownCloud: PHP
 
-[![Build Status](https://drone.owncloud.com/api/badges/owncloud-docker/php/status.svg)](https://drone.owncloud.com/owncloud-docker/php)
+[![Docker CI](https://github.com/owncloud-docker/php/actions/workflows/main.yml/badge.svg)](https://github.com/owncloud-docker/php/actions/workflows/main.yml)
 [![Docker Hub](https://img.shields.io/docker/v/owncloud/php?logo=docker&label=dockerhub&sort=semver&logoColor=white)](https://hub.docker.com/r/owncloud/php)
 [![GitHub contributors](https://img.shields.io/github/contributors/owncloud-docker/php)](https://github.com/owncloud-docker/php/graphs/contributors)
 [![Source: GitHub](https://img.shields.io/badge/source-github-blue.svg?logo=github&logoColor=white)](https://github.com/owncloud-docker/php)
