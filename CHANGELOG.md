@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-09-11
+
+* Security
+  * Ship a restrictive ImageMagick policy denying the MSL/MVG/MSVG script
+    coders and the EPHEMERAL/URL/HTTP/HTTPS/FTP delegates, and install
+    `librsvg2-bin` so ImageMagick delegates SVG decoding to `rsvg-convert`
+    instead of falling back to its own coder when the binary is missing
+    (OC10-164)
+
 ## 2026-07-06
 
 * Added

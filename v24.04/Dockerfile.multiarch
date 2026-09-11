@@ -40,6 +40,7 @@ RUN apt-get update -y && \
   exiftool \
   sqlite3 \
   librsvg2-common \
+  librsvg2-bin \
   ghostscript && \
   rm -rf /etc/apache2/envvars /etc/apache2/conf-* /etc/apache2/sites-* /var/log/apache2/* && \
   a2enmod rewrite headers env dir mime expires remoteip && \
