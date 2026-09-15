@@ -50,6 +50,7 @@ RUN apt-get update -y && \
   exiftool \
   sqlite3 \
   librsvg2-common \
+  librsvg2-bin \
   ghostscript && \
   apt-add-repository -r "https://deb.owncloud.com/php.freexian.com/" -y && \
   rm -rf /etc/apache2/envvars /etc/apache2/conf-* /etc/apache2/sites-* /var/log/apache2/* && \
